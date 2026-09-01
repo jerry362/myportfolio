@@ -31,8 +31,7 @@ const products = [
     category: "Character",
     rarity: "Super Rare",
     type: "image",
-    imageSrc:
-      "https://image.qwenlm.ai/generated-images/eb550f21-5fa0-4236-840e-2e1a55961fe4/_result.png",
+    imageSrc: "img/a1.png",
     videoUrl: null,
     prompt:
       "Pixel art portrait of a neon cyberpunk cat wearing a chrome visor, glowing cyan and magenta palette, dark navy grid background, 16-bit sprite style, thick outlines, centered head composition",
@@ -45,8 +44,7 @@ const products = [
     category: "Character",
     rarity: "Rare",
     type: "image",
-    imageSrc:
-      "https://image.qwenlm.ai/generated-images/e025ccb7-c550-4f9f-9251-080dcc3c1423/_result.png",
+    imageSrc: "img/a2.png",
     videoUrl: null,
     prompt:
       "Pixel art astronaut cat floating in pastel outer space with small planets, stars and a gold capsule satellite, cyan magenta gold palette, 16-bit sprite, thick outlines, deep indigo background",
@@ -59,8 +57,7 @@ const products = [
     category: "Pixel Art",
     rarity: "Common",
     type: "image",
-    imageSrc:
-      "https://image.qwenlm.ai/generated-images/e560e185-d693-45e1-ad84-cf92b28e2871/_result.png",
+    imageSrc: "img/a3.png",
     videoUrl: null,
     prompt:
       "Pixel art retro arcade cabinet machine with a glowing cat face on screen, cyan magenta yellow palette, 16-bit sprite style, thick dark outlines, flat light gray background",
@@ -73,8 +70,7 @@ const products = [
     category: "Pixel Art",
     rarity: "Rare",
     type: "image",
-    imageSrc:
-      "https://image.qwenlm.ai/generated-images/a136811e-c66c-42a1-8ebe-66427ff09fff/_result.png",
+    imageSrc: "img/a4.png",
     videoUrl: null,
     prompt:
       "Pixel art bowl of holographic neon ramen with glowing steam swirls and chopsticks, cyberpunk food illustration, cyan and magenta palette, 16-bit sprite, thick outlines, dark navy background",
@@ -87,8 +83,7 @@ const products = [
     category: "Poster",
     rarity: "Super Rare",
     type: "image",
-    imageSrc:
-      "https://image.qwenlm.ai/generated-images/3faf4779-1522-4b92-943d-5a51f90fed99/_result.png",
+    imageSrc: "img/a5.png",
     videoUrl: null,
     prompt:
       "Retro pop-art screenprint poster of a cat face made of halftone dots, neon pink cyan and yellow ink layers, bold geometric shapes, slight misregistration effect, grainy risograph texture",
@@ -101,8 +96,7 @@ const products = [
     category: "Sticker",
     rarity: "Common",
     type: "image",
-    imageSrc:
-      "https://image.qwenlm.ai/generated-images/fb909fd8-5384-46b1-873c-39f9a2cfb7de/_result.png",
+    imageSrc: "img/a6.png",
     videoUrl: null,
     prompt:
       "Sheet of cute pixel art cat stickers in six different poses, kawaii 16-bit sprites, thick white sticker borders, arranged in a neat grid on a flat light gray background, pastel neon accents",
@@ -115,8 +109,7 @@ const products = [
     category: "Wallpaper",
     rarity: "Rare",
     type: "image",
-    imageSrc:
-      "https://image.qwenlm.ai/generated-images/1dcd0d86-23dc-43b6-8b31-a6dce9eaf4a2/_result.png",
+    imageSrc: "img/a7.png",
     videoUrl: null,
     prompt:
       "Synthwave sunset landscape, pixel art style, glowing magenta sun with horizontal scanlines over a neon cyan perspective grid floor, purple mountains silhouette, stars, 16-bit retro aesthetic, wide cinematic",
@@ -129,8 +122,7 @@ const products = [
     category: "Character",
     rarity: "Legendary",
     type: "image",
-    imageSrc:
-      "https://image.qwenlm.ai/generated-images/8b570243-4dda-43d0-b3e9-94a932e101ec/_result.png",
+    imageSrc: "img/a8.png",
     videoUrl: null,
     prompt:
       "Cute pixel art illustration of a chubby cyberpunk cat bursting out of a golden gacha capsule, neon cyan and magenta confetti pixels flying, chunky 16-bit sprites, thick dark outlines, flat ice-white background, pop-art arcade sticker style",
