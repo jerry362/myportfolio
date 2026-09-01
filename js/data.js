@@ -66,15 +66,15 @@ const products = [
   {
     id: "PD-004",
     slot: "B1",
-    title: "사이버 라면 한 그릇",
+    title: "사이버 케이크 한 조각",
     category: "Pixel Art",
     rarity: "Rare",
     type: "image",
     imageSrc: "img/a4.png",
     videoUrl: null,
     prompt:
-      "Pixel art bowl of holographic neon ramen with glowing steam swirls and chopsticks, cyberpunk food illustration, cyan and magenta palette, 16-bit sprite, thick outlines, dark navy background",
-    tags: ["라면", "사이버푸드", "홀로그램", "야식"],
+      "Pixel art slice of holographic neon strawberry shortcake on a dark plate with a fork and glowing jelly candies, surrounded by floating neon sparkles, hearts, and stars, cyberpunk dessert illustration, cyan and magenta palette, glowing pastel neon accents, 16-bit sprite, thick outlines, dark navy background",
+    tags: ["케이크", "사이버푸드", "홀로그램", "간식"],
   },
   {
     id: "PD-005",
@@ -105,15 +105,15 @@ const products = [
   {
     id: "PD-007",
     slot: "C1",
-    title: "신스웨이브 선셋 월페이퍼",
+    title: "사이버파크 낮잠냥 월페이퍼",
     category: "Wallpaper",
     rarity: "Rare",
     type: "image",
     imageSrc: "img/a7.png",
     videoUrl: null,
     prompt:
-      "Synthwave sunset landscape, pixel art style, glowing magenta sun with horizontal scanlines over a neon cyan perspective grid floor, purple mountains silhouette, stars, 16-bit retro aesthetic, wide cinematic",
-    tags: ["배경화면", "신스웨이브", "석양", "와이드"],
+      "Wide cinematic pixel art illustration of a cute chubby cat sleeping peacefully under a giant cyberpunk neon tree in a futuristic park, glowing neon cyan and magenta outlines, 16-bit retro sprite aesthetic, park bench, glowing lanterns, glowing jelly orbs, pixelated constellation stars and floating hearts in the dark night sky, cyberpunk lofi mood, dark navy background, ultra-wide aspect ratio",
+    tags: ["배경화면", "사이버파크", "낮잠", "와이드"],
   },
   {
     id: "PD-008",
