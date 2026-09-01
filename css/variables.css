@@ -1,0 +1,73 @@
+/* ══════════════════════════════════════════════════════════
+   PIXEL DROP — Design Tokens (Bright Pop-Art Arcade Theme)
+   ══════════════════════════════════════════════════════════ */
+:root {
+  /* ── Surfaces ── */
+  --bg: #f8fafc; /* Ice White — 메인 캔버스 */
+  --surface: #ffffff; /* 카드 & 컨테이너 */
+  --surface-2: #f1f5f9; /* 얼터네이트 서피스 */
+  --stroke: #cbd5e1; /* 보더 & 스트로크 */
+
+  /* ── Accents ── */
+  --cyan: #00c2d1; /* Cyber Cyan — Primary */
+  --magenta: #ff007a; /* Neon Magenta — Secondary */
+  --purple: #8b5cf6; /* Arcade Purple — Brand */
+  --lime: #39ff14; /* Acid Lime — Success / LCD */
+  --gold: #ffd700; /* Gold Capsule — Legendary */
+  --gold-deep: #f5a300;
+
+  /* ── Pastels (섹션 밴드) ── */
+  --pastel-yellow: #fff3c4;
+  --pastel-blue: #dbf1ff;
+  --pastel-pink: #ffe3f0;
+  --pastel-mint: #ddf8e9;
+
+  /* ── Text ── */
+  --ink: #0f172a; /* Dark Slate — 헤드 */
+  --ink-2: #475569; /* Slate Gray — 본문 */
+  --ink-3: #94a3b8; /* Light Gray — 서브 */
+
+  /* ── Typography ── */
+  --font-primary:
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", Roboto, sans-serif;
+  --font-pixel: "Press Start 2P", "Pretendard Variable", monospace;
+  --font-lcd: "VT323", "Press Start 2P", monospace;
+
+  /* ── Shadows (Pop-Art 하드 섀도우) ── */
+  --hs-s: 3px 3px 0 var(--ink);
+  --hs-m: 6px 6px 0 var(--ink);
+  --hs-l: 10px 10px 0 var(--ink);
+  --hs-cyan: 6px 6px 0 var(--cyan);
+  --hs-magenta: 6px 6px 0 var(--magenta);
+  --hs-gold: 6px 6px 0 var(--gold);
+
+  /* ── Radius / Border ── */
+  --r-s: 8px;
+  --r-m: 14px;
+  --r-l: 20px;
+  --bw: 3px; /* 팝아트 아웃라인 두께 */
+
+  /* ── Layout ── */
+  --container: 1280px;
+  --gutter: 24px;
+  --header-h: 74px;
+
+  /* ── Motion ── */
+  --t-fast: 0.18s cubic-bezier(0.22, 0.9, 0.35, 1);
+  --t-mid: 0.35s cubic-bezier(0.22, 0.9, 0.35, 1);
+  --t-spring: 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Rarity Colors ── */
+  --rc-common: #64748b;
+  --rc-rare: #00c2d1;
+  --rc-super: #ff007a;
+  --rc-legendary: #f5a300;
+
+  /* ── Halftone & Grid Patterns ── */
+  --dots: radial-gradient(var(--stroke) 1.2px, transparent 1.2px);
+  --pixel-grid:
+    linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+}

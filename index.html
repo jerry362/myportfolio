@@ -1,0 +1,1946 @@
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PIXEL DROP — 코인을 넣고 AI 디지털 굿즈를 뽑는 인터랙티브 자판기 포트폴리오. 100% HTML·CSS·JavaScript."
+    />
+    <title>PIXEL DROP — AI Digital Goods Vending Machine</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23FFD700' stroke='%230F172A' stroke-width='3'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' font-family='monospace' font-weight='bold' fill='%230F172A'%3EP%3C/text%3E%3C/svg%3E"
+    />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin=""
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/vending.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body class="">
+    <!-- 앰비언트 픽셀 파티클 캔버스 -->
+    <canvas
+      id="bg-canvas"
+      aria-hidden="true"
+      width="1440"
+      height="904"
+    ></canvas>
+
+    <!-- ══════════════════════ GNB ══════════════════════ -->
+    <header class="site-header" id="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#vending" aria-label="PIXEL DROP 홈">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                fill="var(--gold)"
+                stroke="var(--ink)"
+                stroke-width="2.4"
+              ></circle>
+              <path
+                d="M12 7v10M9 9.5h4.2a2.3 2.3 0 1 1 0 4.6H9"
+                stroke="var(--ink)"
+                stroke-width="2.2"
+                fill="none"
+                stroke-linecap="square"
+              ></path>
+            </svg>
+          </span>
+          <span class="brand-name pixel-font"
+            >PIXEL<span class="brand-cursor">▮</span>DROP</span
+          >
+        </a>
+
+        <nav class="gnb" aria-label="주 메뉴">
+          <ul class="nav-links">
+            <li>
+              <a href="#vending" data-sec="vending" class="active"
+                >VENDING MACHINE</a
+              >
+            </li>
+            <li><a href="#catdrop" data-sec="catdrop" class="">CAT DROP</a></li>
+            <li><a href="#catalog" data-sec="catalog" class="">CATALOG</a></li>
+            <li><a href="#gacha" data-sec="gacha" class="">GACHA</a></li>
+            <li><a href="#motion" data-sec="motion" class="">MOTION</a></li>
+            <li><a href="#studio" data-sec="studio" class="">STUDIO</a></li>
+            <li><a href="#about" data-sec="about" class="">ABOUT</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-tools">
+          <div
+            class="coin-indicator"
+            id="coin-indicator"
+            aria-live="polite"
+            title="보유 코인"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                fill="var(--gold)"
+                stroke="var(--ink)"
+                stroke-width="2.2"
+              ></circle>
+              <text
+                x="12"
+                y="16.5"
+                text-anchor="middle"
+                font-size="11"
+                font-weight="800"
+                fill="var(--ink)"
+                font-family="monospace"
+              >
+                C
+              </text>
+            </svg>
+            <span class="pixel-font coin-label">COIN</span>
+            <b class="pixel-font coin-count" id="coin-count">4</b>
+            <button
+              class="coin-refill pixel-font"
+              id="coin-refill"
+              type="button"
+              aria-label="무료 코인 3개 충전"
+            >
+              +3
+            </button>
+          </div>
+          <button
+            class="sound-toggle"
+            id="sound-toggle"
+            type="button"
+            aria-pressed="true"
+            aria-label="효과음 켜기/끄기"
+          >
+            <svg
+              class="ico-on"
+              viewBox="0 0 24 24"
+              width="19"
+              height="19"
+              aria-hidden="true"
+            >
+              <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"></path>
+              <path
+                d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+            <svg
+              class="ico-off"
+              viewBox="0 0 24 24"
+              width="19"
+              height="19"
+              aria-hidden="true"
+            >
+              <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"></path>
+              <path
+                d="M16 9l6 6M22 9l-6 6"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+          </button>
+          <button
+            class="hamburger"
+            id="hamburger"
+            type="button"
+            aria-label="메뉴 열기"
+            aria-expanded="false"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 모바일 드로어 -->
+    <div class="drawer-backdrop" id="drawer-backdrop" hidden=""></div>
+    <aside
+      class="mobile-drawer"
+      id="mobile-drawer"
+      aria-label="모바일 메뉴"
+      aria-hidden="true"
+    >
+      <div class="drawer-head">
+        <span class="pixel-font drawer-logo">PIXEL▮DROP</span>
+        <button
+          class="modal-close drawer-close"
+          id="drawer-close"
+          type="button"
+          aria-label="메뉴 닫기"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16">
+            <path
+              d="M5 5l14 14M19 5L5 19"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="square"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="drawer-nav" aria-label="모바일 주 메뉴">
+        <a href="#vending"
+          ><em class="pixel-font">01</em> VENDING MACHINE
+          <small>인터랙티브 자판기</small></a
+        >
+        <a href="#catdrop"
+          ><em class="pixel-font">02</em> CAT DROP
+          <small>사이버 고양이 세계관</small></a
+        >
+        <a href="#catalog"
+          ><em class="pixel-font">03</em> CATALOG
+          <small>디지털 굿즈 전체 목록</small></a
+        >
+        <a href="#gacha"
+          ><em class="pixel-font">04</em> GACHA <small>럭키 캡슐 드롭</small></a
+        >
+        <a href="#motion"
+          ><em class="pixel-font">05</em> MOTION
+          <small>AI 비디오 아카이브</small></a
+        >
+        <a href="#studio"
+          ><em class="pixel-font">06</em> STUDIO
+          <small>프롬프트 시뮬레이터</small></a
+        >
+        <a href="#about"
+          ><em class="pixel-font">07</em> ABOUT
+          <small>크리에이터 소개</small></a
+        >
+      </nav>
+      <div class="drawer-foot">
+        <span class="pixel-font">COIN <b id="drawer-coin">4</b></span>
+        <button
+          class="btn btn-small btn-gold pixel-font"
+          id="drawer-refill"
+          type="button"
+        >
+          +3 FREE
+        </button>
+      </div>
+    </aside>
+
+    <main>
+      <!-- ══════════════════════ 01. VENDING MACHINE (HERO) ══════════════════════ -->
+      <section class="hero" id="vending" aria-label="인터랙티브 자판기">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow reveal in">
+              <span class="eyebrow-dot" aria-hidden="true"></span>AI DIGITAL
+              GOODS STORE — EST. 2026
+            </p>
+            <h1 class="hero-title">
+              <span class="line-pixel reveal in">INSERT COIN,</span>
+              <span class="line-ko reveal in"
+                >디지털 상상을<br /><em class="marker">뽑아</em>보세요</span
+              >
+            </h1>
+            <p class="hero-desc reveal in">
+              이곳은 프레임워크 없이
+              <strong>HTML · CSS · JavaScript</strong> 만으로 지은 가상
+              아케이드입니다.<br />
+              코인을 넣고 키패드로 슬롯 번호를 입력하면,<br />AI가 생성한 디지털
+              굿즈가 캡슐에 담겨 <strong>툭—</strong> 하고 떨어집니다.<br />자판기
+              아래 배출구를 클릭해 언박싱하세요.
+            </p>
+            <ul class="hero-chips reveal in" aria-label="핵심 정보">
+              <li class="chip-sticker c-cyan">
+                <span class="pixel-font">01</span> 코인 투입
+              </li>
+              <li class="chip-sticker c-magenta">
+                <span class="pixel-font">02</span> A1~C3 선택
+              </li>
+              <li class="chip-sticker c-gold">
+                <span class="pixel-font">03</span> 캡슐 언박싱
+              </li>
+            </ul>
+            <div class="hero-cta reveal in">
+              <a class="btn btn-primary pixel-font" href="#gacha"
+                >▼ QUICK GACHA</a
+              >
+              <a class="btn btn-ghost pixel-font" href="#catalog"
+                >CATALOG 보기</a
+              >
+            </div>
+          </div>
+
+          <div class="hero-stage reveal in">
+            <span class="float-sticker s-new pixel-font" aria-hidden="true"
+              >NEW!</span
+            >
+            <span class="float-sticker s-js pixel-font" aria-hidden="true"
+              >100%<br />VANILLA JS</span
+            >
+            <span class="float-sticker s-ai" aria-hidden="true">✨ AI ART</span>
+
+            <!-- ── 3D 가상 자판기 ── -->
+            <div class="machine-perspective">
+              <div
+                class="machine"
+                id="vending-machine"
+                aria-label="PIXEL DROP 가상 자판기"
+              >
+                <div class="machine-marquee">
+                  <div class="bulbs bulbs-top" data-bulbs="" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+                    ><i></i><i></i><i></i><i></i>
+                  </div>
+                  <div class="marquee-sign pixel-font">
+                    <span class="sign-word">PIXEL</span>
+                    <span class="sign-star" aria-hidden="true">★</span>
+                    <span class="sign-word flicker">DROP</span>
+                  </div>
+                  <div
+                    class="bulbs bulbs-bottom"
+                    data-bulbs=""
+                    aria-hidden="true"
+                  >
+                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+                    ><i></i><i></i><i></i><i></i>
+                  </div>
+                </div>
+
+                <div class="machine-body">
+                  <div class="glass-window">
+                    <div class="glass-shine" aria-hidden="true"></div>
+                    <div class="slots" id="vm-slots">
+                      <div class="slot" data-slot="A1" title="네온 사이버 캣">
+                        <img
+                          src="https://image.qwenlm.ai/generated-images/eb550f21-5fa0-4236-840e-2e1a55961fe4/_result.png"
+                          alt="네온 사이버 캣"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">A1</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                      <div
+                        class="slot restock"
+                        data-slot="A2"
+                        title="우주 고양이 아스트로"
+                      >
+                        <img
+                          src="https://image.qwenlm.ai/generated-images/e025ccb7-c550-4f9f-9251-080dcc3c1423/_result.png"
+                          alt="우주 고양이 아스트로"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">A2</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                      <div
+                        class="slot"
+                        data-slot="A3"
+                        title="픽셀 아케이드 머신"
+                      >
+                        <img
+                          src="https://image.qwenlm.ai/generated-images/e560e185-d693-45e1-ad84-cf92b28e2871/_result.png"
+                          alt="픽셀 아케이드 머신"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">A3</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                      <div
+                        class="slot"
+                        data-slot="B1"
+                        title="사이버 라면 한 그릇"
+                      >
+                        <img
+                          src="https://image.qwenlm.ai/generated-images/a136811e-c66c-42a1-8ebe-66427ff09fff/_result.png"
+                          alt="사이버 라면 한 그릇"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">B1</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                      <div
+                        class="slot"
+                        data-slot="B2"
+                        title="핑크 글로우 실크스크린 포스터"
+                      >
+                        <img
+                          src="https://image.qwenlm.ai/generated-images/3faf4779-1522-4b92-943d-5a51f90fed99/_result.png"
+                          alt="핑크 글로우 실크스크린 포스터"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">B2</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                      <div class="slot" data-slot="B3" title="말랑 캣 스티커팩">
+                        <img
+                          src="https://image.qwenlm.ai/generated-images/fb909fd8-5384-46b1-873c-39f9a2cfb7de/_result.png"
+                          alt="말랑 캣 스티커팩"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">B3</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                      <div
+                        class="slot"
+                        data-slot="C1"
+                        title="신스웨이브 선셋 월페이퍼"
+                      >
+                        <img
+                          src="https://image.qwenlm.ai/generated-images/1dcd0d86-23dc-43b6-8b31-a6dce9eaf4a2/_result.png"
+                          alt="신스웨이브 선셋 월페이퍼"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">C1</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                      <div class="slot" data-slot="C2" title="골든 캡슐 캣">
+                        <img
+                          src="https://image.qwenlm.ai/generated-images/8b570243-4dda-43d0-b3e9-94a932e101ec/_result.png"
+                          alt="골든 캡슐 캣"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">C2</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                      <div
+                        class="slot"
+                        data-slot="C3"
+                        title="픽셀 드롭 오프닝 모션"
+                      >
+                        <img
+                          src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
+                          alt="픽셀 드롭 오프닝 모션"
+                          loading="lazy"
+                        />
+                        <span class="slot-code">C3</span>
+                        <span class="slot-shelf"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="control-panel">
+                    <div class="lcd" role="status" aria-live="polite">
+                      <div class="lcd-screen">
+                        <span class="lcd-line mode-scroll" id="vm-lcd-text"
+                          >INSERT COIN TO START</span
+                        >
+                      </div>
+                      <span class="lcd-led" aria-hidden="true"></span>
+                    </div>
+                    <div
+                      class="keypad"
+                      id="vm-keypad"
+                      aria-label="자판기 키패드"
+                    >
+                      <button
+                        class="key key-row pressed"
+                        data-key="A"
+                        type="button"
+                        disabled=""
+                      >
+                        A
+                      </button>
+                      <button
+                        class="key key-row"
+                        data-key="B"
+                        type="button"
+                        disabled=""
+                      >
+                        B
+                      </button>
+                      <button
+                        class="key key-row"
+                        data-key="C"
+                        type="button"
+                        disabled=""
+                      >
+                        C
+                      </button>
+                      <button
+                        class="key key-col"
+                        data-key="1"
+                        type="button"
+                        disabled=""
+                      >
+                        1
+                      </button>
+                      <button
+                        class="key key-col pressed"
+                        data-key="2"
+                        type="button"
+                        disabled=""
+                      >
+                        2
+                      </button>
+                      <button
+                        class="key key-col"
+                        data-key="3"
+                        type="button"
+                        disabled=""
+                      >
+                        3
+                      </button>
+                      <button
+                        class="key key-fn key-clr"
+                        data-key="CLR"
+                        type="button"
+                        disabled=""
+                      >
+                        CLR
+                      </button>
+                      <button
+                        class="key key-fn key-ok"
+                        data-key="OK"
+                        type="button"
+                        disabled=""
+                      >
+                        OK
+                      </button>
+                    </div>
+                    <div class="coin-zone">
+                      <button
+                        class="coin-slot-btn"
+                        id="vm-coin-btn"
+                        type="button"
+                      >
+                        <span class="coin-slot-hole" aria-hidden="true"
+                          ><span class="fly-coin flying" id="fly-coin"></span
+                        ></span>
+                        <span class="pixel-font coin-slot-label"
+                          >INSERT<br />COIN</span
+                        >
+                      </button>
+                      <div class="coin-return pixel-font" aria-hidden="true">
+                        RETURN ◄
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="machine-base">
+                  <div
+                    class="dispense"
+                    id="vm-tray"
+                    role="button"
+                    tabindex="0"
+                    aria-label="상품 배출구 — 캡슐이 떨어지면 클릭하여 수령하세요"
+                  >
+                    <div class="dispense-inner">
+                      <div class="tray-hole" id="vm-tray-hole"></div>
+                      <div class="dispense-flap pixel-font">PUSH ▼</div>
+                    </div>
+                  </div>
+                  <div class="machine-legs" aria-hidden="true">
+                    <span></span><span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 아케이드 티커 -->
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span class="ticker-item">★ INSERT COIN TO START</span
+          ><span class="ticker-item">100% HANDCRAFTED HTML·CSS·JS</span
+          ><span class="ticker-item">★ AI GENERATED PIXEL ART</span
+          ><span class="ticker-item">9 SLOTS · 4 RARITIES</span
+          ><span class="ticker-item">★ 럭키 캡슐 드롭 운행 중</span
+          ><span class="ticker-item">PRESS START</span
+          ><span class="ticker-item">★ NO FRAMEWORK WAS HARMED</span
+          ><span class="ticker-item">READY PLAYER ONE</span>
+          <span class="ticker-item">★ INSERT COIN TO START</span
+          ><span class="ticker-item">100% HANDCRAFTED HTML·CSS·JS</span
+          ><span class="ticker-item">★ AI GENERATED PIXEL ART</span
+          ><span class="ticker-item">9 SLOTS · 4 RARITIES</span
+          ><span class="ticker-item">★ 럭키 캡슐 드롭 운행 중</span
+          ><span class="ticker-item">PRESS START</span
+          ><span class="ticker-item">★ NO FRAMEWORK WAS HARMED</span
+          ><span class="ticker-item">READY PLAYER ONE</span>
+        </div>
+      </div>
+
+      <!-- ══════════════════════ 02. CAT DROP ══════════════════════ -->
+      <section class="section catdrop" id="catdrop" aria-label="브랜드 세계관">
+        <div class="container">
+          <div class="section-head reveal in">
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>THE PIXEL DROP
+              UNIVERSE
+            </p>
+            <h2 class="section-title">
+              사이버 고양이 <em class="marker">'픽셀'</em>의 세계관
+            </h2>
+            <p class="section-desc">
+              모든 굿즈의 주인공은 캡슐 우주에서 떨어진 고양이
+              <strong>픽셀</strong>입니다.<br />네온 도시, 은하수 항로, 오락실
+              행성을 떠돌며 매 시즌 새로운 드롭을 남깁니다.
+            </p>
+          </div>
+
+          <figure class="tv-frame reveal in">
+            <div class="tv-screen">
+              <img
+                src="https://image.qwenlm.ai/generated-images/f89ec951-a3b1-4ac2-a6b5-5d1c120d4f5a/_result.png"
+                alt="거대한 우주 고양이 별자리가 네온 오락실 도시 위에 떠 있는 픽셀아트 장면"
+                loading="lazy"
+              />
+              <div class="tv-scanlines" aria-hidden="true"></div>
+            </div>
+            <figcaption class="tv-caption">
+              <span class="pixel-font">EP.00 — THE FIRST DROP</span>
+              <span class="tv-meta"
+                >골든 캡슐이 네온 시티 상공에서 열리던 밤 · AI 일러스트 · Imagen
+                3</span
+              >
+            </figcaption>
+          </figure>
+
+          <div class="chapter-grid">
+            <article class="chapter-card reveal in" style="--d: 0.05s">
+              <div class="chapter-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/e025ccb7-c550-4f9f-9251-080dcc3c1423/_result.png"
+                  alt="우주복을 입은 고양이 픽셀아트"
+                  loading="lazy"
+                /><span class="pixel-font chapter-no">CH.01</span>
+              </div>
+              <h3>우주 고양이 <small>SPACE CAT</small></h3>
+              <p>
+                은하수 캡슐 항로를 따라 표류하는 픽셀의 첫 번째 기록. 무중력
+                상태에서도 골든 캡슐은 절대 놓치지 않습니다.
+              </p>
+            </article>
+            <article class="chapter-card reveal in" style="--d: 0.15s">
+              <div class="chapter-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/a136811e-c66c-42a1-8ebe-66427ff09fff/_result.png"
+                  alt="홀로그램 라면 그릇 픽셀아트"
+                  loading="lazy"
+                /><span class="pixel-font chapter-no">CH.02</span>
+              </div>
+              <h3>사이버 푸드 <small>CYBER FOOD</small></h3>
+              <p>
+                네온 골목의 홀로그램 라면 가게. 김이 글리치처럼 피어오르는
+                사이버 푸드 시리즈는 스티커로 가장 인기가 많습니다.
+              </p>
+            </article>
+            <article class="chapter-card reveal in" style="--d: 0.25s">
+              <div class="chapter-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/e560e185-d693-45e1-ad84-cf92b28e2871/_result.png"
+                  alt="레트로 아케이드 오락기 픽셀아트"
+                  loading="lazy"
+                /><span class="pixel-font chapter-no">CH.03</span>
+              </div>
+              <h3>레트로 SF <small>RETRO SCI-FI</small></h3>
+              <p>
+                오락실 행성 CRT-9의 유일한 주민. 화면 속 고양이와 눈이 마주치면
+                크레딧 하나가 사라진다는 도시전설이 있습니다.
+              </p>
+            </article>
+          </div>
+
+          <div
+            class="universe-stats reveal in"
+            role="list"
+            aria-label="세계관 수치"
+          >
+            <div class="u-stat" role="listitem">
+              <b class="pixel-font">VER 1.0</b><span>월드 바이블</span>
+            </div>
+            <div class="u-stat" role="listitem">
+              <b class="pixel-font">09</b><span>드롭 캐릭터</span>
+            </div>
+            <div class="u-stat" role="listitem">
+              <b class="pixel-font">04</b><span>레어도 시스템</span>
+            </div>
+            <div class="u-stat" role="listitem">
+              <b class="pixel-font">∞</b><span>다음 시즌</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ 03. CATALOG ══════════════════════ -->
+      <section
+        class="section catalog"
+        id="catalog"
+        aria-label="디지털 굿즈 카탈로그"
+      >
+        <div class="container">
+          <div class="section-head reveal in">
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>FULL CATALOG
+            </p>
+            <h2 class="section-title">
+              디지털 굿즈 <em class="marker">카탈로그</em>
+            </h2>
+            <p class="section-desc">
+              자판기에서 뽑을 수 있는 전체 드롭 목록입니다.<br />카테고리·검색·희귀도
+              필터로 원하는 굿즈를 찾고, 카드를 클릭하면 AI 제작 프롬프트까지
+              열람할 수 있습니다.
+            </p>
+          </div>
+
+          <div class="catalog-toolbar reveal in">
+            <ul
+              class="catalog-tabs"
+              id="catalog-tabs"
+              role="tablist"
+              aria-label="카테고리 필터"
+            >
+              <li>
+                <button
+                  class="tab active"
+                  data-cat="All"
+                  type="button"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  ALL
+                </button>
+              </li>
+              <li>
+                <button
+                  class="tab"
+                  data-cat="Character"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  CHARACTER
+                </button>
+              </li>
+              <li>
+                <button
+                  class="tab"
+                  data-cat="Pixel Art"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  PIXEL ART
+                </button>
+              </li>
+              <li>
+                <button
+                  class="tab"
+                  data-cat="Poster"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  POSTER
+                </button>
+              </li>
+              <li>
+                <button
+                  class="tab"
+                  data-cat="Sticker"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  STICKER
+                </button>
+              </li>
+              <li>
+                <button
+                  class="tab"
+                  data-cat="Wallpaper"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  WALLPAPER
+                </button>
+              </li>
+              <li>
+                <button
+                  class="tab"
+                  data-cat="Motion"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  MOTION
+                </button>
+              </li>
+            </ul>
+            <div class="toolbar-right">
+              <div class="search-box">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="17"
+                  height="17"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="10.5"
+                    cy="10.5"
+                    r="6.5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                  ></circle>
+                  <path
+                    d="M15.5 15.5L21 21"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                  ></path>
+                </svg>
+                <input
+                  type="search"
+                  id="catalog-search"
+                  placeholder="상품명 · 태그 검색"
+                  aria-label="상품 검색"
+                  autocomplete="off"
+                />
+              </div>
+              <div
+                class="rarity-filter"
+                id="rarity-filter"
+                role="group"
+                aria-label="희귀도 필터"
+              >
+                <button class="r-chip active" data-rar="All" type="button">
+                  ALL
+                </button>
+                <button
+                  class="r-chip"
+                  data-rar="Common"
+                  type="button"
+                  style="--rc: #64748b"
+                >
+                  C
+                </button>
+                <button
+                  class="r-chip"
+                  data-rar="Rare"
+                  type="button"
+                  style="--rc: #00c2d1"
+                >
+                  R
+                </button>
+                <button
+                  class="r-chip"
+                  data-rar="Super Rare"
+                  type="button"
+                  style="--rc: #ff007a"
+                >
+                  SR
+                </button>
+                <button
+                  class="r-chip"
+                  data-rar="Legendary"
+                  type="button"
+                  style="--rc: #f5a300"
+                >
+                  L
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <p
+            class="catalog-count reveal in"
+            id="catalog-count"
+            aria-live="polite"
+          >
+            9 ITEMS · 총 9종 드롭 중
+          </p>
+          <div class="catalog-grid" id="catalog-grid">
+            <article
+              class="goods-card rarity-SuperRare"
+              data-id="PD-001"
+              tabindex="0"
+              role="button"
+              aria-label="네온 사이버 캣 상세 보기"
+              style="--rc: #ff007a; --d: 0s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/eb550f21-5fa0-4236-840e-2e1a55961fe4/_result.png"
+                  alt="네온 사이버 캣"
+                  loading="lazy"
+                />
+                <span class="slot-chip">A1</span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">CHARACTER</span>
+                <h3>네온 사이버 캣</h3>
+                <span class="rarity-tag" style="--rc: #ff007a">SUPER RARE</span>
+              </div>
+            </article>
+            <article
+              class="goods-card rarity-Rare"
+              data-id="PD-002"
+              tabindex="0"
+              role="button"
+              aria-label="우주 고양이 아스트로 상세 보기"
+              style="--rc: #00c2d1; --d: 0.05s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/e025ccb7-c550-4f9f-9251-080dcc3c1423/_result.png"
+                  alt="우주 고양이 아스트로"
+                  loading="lazy"
+                />
+                <span class="slot-chip">A2</span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">CHARACTER</span>
+                <h3>우주 고양이 아스트로</h3>
+                <span class="rarity-tag" style="--rc: #00c2d1">RARE</span>
+              </div>
+            </article>
+            <article
+              class="goods-card rarity-Common"
+              data-id="PD-003"
+              tabindex="0"
+              role="button"
+              aria-label="픽셀 아케이드 머신 상세 보기"
+              style="--rc: #64748b; --d: 0.1s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/e560e185-d693-45e1-ad84-cf92b28e2871/_result.png"
+                  alt="픽셀 아케이드 머신"
+                  loading="lazy"
+                />
+                <span class="slot-chip">A3</span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">PIXEL ART</span>
+                <h3>픽셀 아케이드 머신</h3>
+                <span class="rarity-tag" style="--rc: #64748b">COMMON</span>
+              </div>
+            </article>
+            <article
+              class="goods-card rarity-Rare"
+              data-id="PD-004"
+              tabindex="0"
+              role="button"
+              aria-label="사이버 라면 한 그릇 상세 보기"
+              style="--rc: #00c2d1; --d: 0.15000000000000002s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/a136811e-c66c-42a1-8ebe-66427ff09fff/_result.png"
+                  alt="사이버 라면 한 그릇"
+                  loading="lazy"
+                />
+                <span class="slot-chip">B1</span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">PIXEL ART</span>
+                <h3>사이버 라면 한 그릇</h3>
+                <span class="rarity-tag" style="--rc: #00c2d1">RARE</span>
+              </div>
+            </article>
+            <article
+              class="goods-card rarity-SuperRare"
+              data-id="PD-005"
+              tabindex="0"
+              role="button"
+              aria-label="핑크 글로우 실크스크린 포스터 상세 보기"
+              style="--rc: #ff007a; --d: 0.2s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/3faf4779-1522-4b92-943d-5a51f90fed99/_result.png"
+                  alt="핑크 글로우 실크스크린 포스터"
+                  loading="lazy"
+                />
+                <span class="slot-chip">B2</span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">POSTER</span>
+                <h3>핑크 글로우 실크스크린 포스터</h3>
+                <span class="rarity-tag" style="--rc: #ff007a">SUPER RARE</span>
+              </div>
+            </article>
+            <article
+              class="goods-card rarity-Common"
+              data-id="PD-006"
+              tabindex="0"
+              role="button"
+              aria-label="말랑 캣 스티커팩 상세 보기"
+              style="--rc: #64748b; --d: 0.25s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/fb909fd8-5384-46b1-873c-39f9a2cfb7de/_result.png"
+                  alt="말랑 캣 스티커팩"
+                  loading="lazy"
+                />
+                <span class="slot-chip">B3</span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">STICKER</span>
+                <h3>말랑 캣 스티커팩</h3>
+                <span class="rarity-tag" style="--rc: #64748b">COMMON</span>
+              </div>
+            </article>
+            <article
+              class="goods-card rarity-Rare"
+              data-id="PD-007"
+              tabindex="0"
+              role="button"
+              aria-label="신스웨이브 선셋 월페이퍼 상세 보기"
+              style="--rc: #00c2d1; --d: 0.30000000000000004s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/1dcd0d86-23dc-43b6-8b31-a6dce9eaf4a2/_result.png"
+                  alt="신스웨이브 선셋 월페이퍼"
+                  loading="lazy"
+                />
+                <span class="slot-chip">C1</span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">WALLPAPER</span>
+                <h3>신스웨이브 선셋 월페이퍼</h3>
+                <span class="rarity-tag" style="--rc: #00c2d1">RARE</span>
+              </div>
+            </article>
+            <article
+              class="goods-card rarity-Legendary"
+              data-id="PD-008"
+              tabindex="0"
+              role="button"
+              aria-label="골든 캡슐 캣 상세 보기"
+              style="--rc: #f5a300; --d: 0.35000000000000003s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/8b570243-4dda-43d0-b3e9-94a932e101ec/_result.png"
+                  alt="골든 캡슐 캣"
+                  loading="lazy"
+                />
+                <span class="slot-chip">C2</span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">CHARACTER</span>
+                <h3>골든 캡슐 캣</h3>
+                <span class="rarity-tag" style="--rc: #f5a300">LEGENDARY</span>
+              </div>
+            </article>
+            <article
+              class="goods-card rarity-Legendary"
+              data-id="PD-009"
+              tabindex="0"
+              role="button"
+              aria-label="픽셀 드롭 오프닝 모션 상세 보기"
+              style="--rc: #f5a300; --d: 0.4s"
+            >
+              <div class="goods-thumb">
+                <img
+                  src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
+                  alt="픽셀 드롭 오프닝 모션"
+                  loading="lazy"
+                />
+                <span class="slot-chip">C3</span>
+                <span class="thumb-play"
+                  ><span
+                    ><svg viewBox="0 0 24 24" width="18" height="18">
+                      <path
+                        d="M8 5l12 7-12 7z"
+                        fill="currentColor"
+                      ></path></svg></span
+                ></span>
+              </div>
+              <div class="goods-info">
+                <span class="goods-cat">MOTION</span>
+                <h3>픽셀 드롭 오프닝 모션</h3>
+                <span class="rarity-tag" style="--rc: #f5a300">LEGENDARY</span>
+              </div>
+            </article>
+          </div>
+          <div class="catalog-empty" id="catalog-empty" hidden="">
+            <span class="pixel-font" aria-hidden="true">¯\_(ツ)_/¯</span>
+            <p>조건에 맞는 굿즈가 없습니다.<br />필터를 초기화해 보세요.</p>
+            <button
+              class="btn btn-small btn-ghost pixel-font"
+              id="catalog-reset"
+              type="button"
+            >
+              RESET FILTER
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ 04. GACHA ══════════════════════ -->
+      <section class="section gacha" id="gacha" aria-label="럭키 캡슐 드롭">
+        <div class="container gacha-grid">
+          <div class="gacha-copy">
+            <p class="eyebrow reveal in">
+              <span class="eyebrow-dot" aria-hidden="true"></span>LUCKY CAPSULE
+              DROP
+            </p>
+            <h2 class="section-title reveal in">
+              럭키 캡슐 <em class="marker">드롭</em>
+            </h2>
+            <p class="section-desc reveal in">
+              자판기까지 걸어갈 필요 없이, 여기서 코인 한 개로 즉석 뽑기.<br />레어도
+              확률은 <b>COMMON 50% · RARE 30% · SUPER RARE 15% · LEGENDARY 5%</b
+              ><br />— 전설의 골든 캡슐 캣을 노려보세요.
+            </p>
+            <div class="gacha-actions reveal in">
+              <button
+                class="btn btn-big btn-magenta pixel-font"
+                id="gacha-btn"
+                type="button"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    fill="var(--gold)"
+                    stroke="var(--ink)"
+                    stroke-width="2.2"
+                  ></circle>
+                  <text
+                    x="12"
+                    y="16.5"
+                    text-anchor="middle"
+                    font-size="11"
+                    font-weight="800"
+                    fill="var(--ink)"
+                    font-family="monospace"
+                  >
+                    1
+                  </text>
+                </svg>
+                INSERT 1 COIN
+              </button>
+              <button
+                class="btn btn-small btn-ghost pixel-font"
+                id="gacha-refill"
+                type="button"
+              >
+                +3 FREE COIN
+              </button>
+            </div>
+            <div class="gacha-history reveal in" aria-label="최근 드롭 기록">
+              <p class="pixel-font history-label">RECENT DROPS</p>
+              <div class="history-row" id="gacha-history">
+                <span class="history-empty">아직 기록이 없습니다</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="gacha-stage reveal in" aria-label="캡슐 드롭 스테이지">
+            <div class="gacha-dome" aria-hidden="true">
+              <span class="mini-cap mc-1"></span
+              ><span class="mini-cap mc-2"></span
+              ><span class="mini-cap mc-3"></span>
+              <span class="mini-cap mc-4"></span
+              ><span class="mini-cap mc-5"></span
+              ><span class="mini-cap mc-6"></span>
+              <div class="dome-glow"></div>
+            </div>
+            <div class="gacha-counter pixel-font" aria-live="polite">
+              TODAY'S LUCK <b id="gacha-count">00</b>
+            </div>
+            <div class="gacha-drop" id="gacha-drop" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ 05. MOTION ══════════════════════ -->
+      <section
+        class="section motion"
+        id="motion"
+        aria-label="모션 및 비디오 아카이브"
+      >
+        <div class="container">
+          <div class="section-head reveal in">
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>MOTION &amp;
+              VIDEO ARCHIVE
+            </p>
+            <h2 class="section-title">
+              움직이는 <em class="marker">픽셀</em>들
+            </h2>
+            <p class="section-desc">
+              정지 이미지를 넘어, AI 모션 모델(Veo · Omni)로 생성한 영상
+              아카이브입니다.<br />포스터를 클릭하면 씨어터 모드로 재생됩니다.
+              <em class="note"
+                >※ 현재는 샘플 플레이스홀더 영상으로, 실제 작업물은 data.js의
+                videoUrl(유튜브 ID)만 교체하면 됩니다.</em
+              >
+            </p>
+          </div>
+
+          <div class="motion-grid">
+            <article
+              class="motion-card reveal in"
+              data-youtube-id="dQw4w9WgXcQ"
+              tabindex="0"
+              role="button"
+              aria-label="영상 재생: NEVER GONNA DROP 오프닝 모션"
+              style="--d: 0s"
+            >
+              <div class="motion-poster">
+                <img
+                  src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
+                  alt="NEVER GONNA DROP 영상 썸네일"
+                  loading="lazy"
+                />
+                <span class="motion-play" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" width="22" height="22">
+                    <path d="M8 5l12 7-12 7z" fill="currentColor"></path></svg
+                ></span>
+                <span class="pixel-font motion-time">0:21</span>
+              </div>
+              <div class="motion-info">
+                <h3>NEVER GONNA DROP</h3>
+                <p>오프닝 모션 · AI Loop</p>
+              </div>
+            </article>
+            <article
+              class="motion-card reveal in"
+              data-youtube-id="jNQXAC9IVRw"
+              tabindex="0"
+              role="button"
+              aria-label="영상 재생: FIRST DROP ARCHIVE"
+              style="--d: 0.08s"
+            >
+              <div class="motion-poster">
+                <img
+                  src="https://i.ytimg.com/vi/jNQXAC9IVRw/hqdefault.jpg"
+                  alt="FIRST DROP ARCHIVE 영상 썸네일"
+                  loading="lazy"
+                />
+                <span class="motion-play" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" width="22" height="22">
+                    <path d="M8 5l12 7-12 7z" fill="currentColor"></path></svg
+                ></span>
+                <span class="pixel-font motion-time">0:19</span>
+              </div>
+              <div class="motion-info">
+                <h3>FIRST DROP ARCHIVE</h3>
+                <p>2005 마스터 테이프 리마스터</p>
+              </div>
+            </article>
+            <article
+              class="motion-card reveal in"
+              data-youtube-id="9bZkp7q19f0"
+              tabindex="0"
+              role="button"
+              aria-label="영상 재생: GANGNAM PIXEL 댄스 시퀀스"
+              style="--d: 0.16s"
+            >
+              <div class="motion-poster">
+                <img
+                  src="https://i.ytimg.com/vi/9bZkp7q19f0/hqdefault.jpg"
+                  alt="GANGNAM PIXEL 영상 썸네일"
+                  loading="lazy"
+                />
+                <span class="motion-play" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" width="22" height="22">
+                    <path d="M8 5l12 7-12 7z" fill="currentColor"></path></svg
+                ></span>
+                <span class="pixel-font motion-time">4:13</span>
+              </div>
+              <div class="motion-info">
+                <h3>GANGNAM PIXEL</h3>
+                <p>댄스 시퀀스 · 스타일 트랜스퍼</p>
+              </div>
+            </article>
+            <article
+              class="motion-card reveal in"
+              data-youtube-id="kJQP7kiw5Fk"
+              tabindex="0"
+              role="button"
+              aria-label="영상 재생: CYBER RITMO 프로모션 필름"
+              style="--d: 0.24s"
+            >
+              <div class="motion-poster">
+                <img
+                  src="https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg"
+                  alt="CYBER RITMO 영상 썸네일"
+                  loading="lazy"
+                />
+                <span class="motion-play" aria-hidden="true"
+                  ><svg viewBox="0 0 24 24" width="22" height="22">
+                    <path d="M8 5l12 7-12 7z" fill="currentColor"></path></svg
+                ></span>
+                <span class="pixel-font motion-time">4:42</span>
+              </div>
+              <div class="motion-info">
+                <h3>CYBER RITMO</h3>
+                <p>프로모션 필름 · Veo 시네마틱</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ 06. STUDIO ══════════════════════ -->
+      <section
+        class="section studio"
+        id="studio"
+        aria-label="AI 크리에이터 스튜디오"
+      >
+        <div class="container">
+          <div class="section-head reveal in">
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>AI CREATOR
+              STUDIO · PROTOTYPE
+            </p>
+            <h2 class="section-title">
+              상상을 입력하면, <em class="marker">드롭</em>이 됩니다
+            </h2>
+            <p class="section-desc">
+              프롬프트와 스타일을 조합해 AI 굿즈 생성을 시뮬레이션하는
+              스튜디오입니다.<br />입력한 문장은 고유 시드(Seed)로 인코딩되어
+              매번 다른 결과물을 만듭니다 —
+              <strong>서버 없이, 브라우저 안에서만</strong> 동작합니다.
+            </p>
+          </div>
+
+          <div class="studio-grid">
+            <div class="studio-controls reveal in">
+              <div class="field">
+                <label class="pixel-font field-label" for="studio-prompt"
+                  >PROMPT_</label
+                >
+                <textarea
+                  id="studio-prompt"
+                  rows="3"
+                  maxlength="80"
+                  placeholder="예: 네온 도시를 달리는 고양이 배달부"
+                ></textarea>
+                <div class="suggest-row" aria-label="추천 프롬프트">
+                  <button
+                    class="suggest-chip"
+                    data-suggest="우주 정거장의 고양이 바리스타"
+                    type="button"
+                  >
+                    우주 고양이 바리스타
+                  </button>
+                  <button
+                    class="suggest-chip"
+                    data-suggest="비 오는 네온 골목의 로봇"
+                    type="button"
+                  >
+                    네온 골목 로봇
+                  </button>
+                  <button
+                    class="suggest-chip"
+                    data-suggest="호박 마차를 끄는 픽셀 공룡"
+                    type="button"
+                  >
+                    픽셀 공룡 마차
+                  </button>
+                </div>
+              </div>
+              <div class="field">
+                <p class="pixel-font field-label" id="style-label">STYLE_</p>
+                <div
+                  class="style-chips"
+                  id="style-chips"
+                  role="radiogroup"
+                  aria-labelledby="style-label"
+                >
+                  <button
+                    class="style-chip active"
+                    data-style="PIXEL"
+                    type="button"
+                    role="radio"
+                    aria-checked="true"
+                  >
+                    ▦ 픽셀
+                  </button>
+                  <button
+                    class="style-chip"
+                    data-style="CYBERPUNK"
+                    type="button"
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    ◈ 사이버펑크
+                  </button>
+                  <button
+                    class="style-chip"
+                    data-style="POPART"
+                    type="button"
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    ◉ 팝아트
+                  </button>
+                  <button
+                    class="style-chip"
+                    data-style="DREAMY"
+                    type="button"
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    ◌ 드리미
+                  </button>
+                  <button
+                    class="style-chip"
+                    data-style="RETRO"
+                    type="button"
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    ▒ 레트로
+                  </button>
+                  <button
+                    class="style-chip"
+                    data-style="RENDER3D"
+                    type="button"
+                    role="radio"
+                    aria-checked="false"
+                  >
+                    ▣ 3D 렌더
+                  </button>
+                </div>
+              </div>
+              <button
+                class="btn btn-primary btn-wide pixel-font"
+                id="generate-btn"
+                type="button"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8zM19 15l.9 2.6L22.5 18l-2.6.9L19 21.5l-.9-2.6L15.5 18l2.6-.9z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+                GENERATE DROP
+              </button>
+              <p class="studio-note">
+                ※ 프로토타입입니다: 실제 AI API 호출 없이 시드 기반 이미지 +
+                스타일 필터로 생성 과정을 시뮬레이션합니다.
+              </p>
+            </div>
+
+            <div class="studio-preview reveal in" aria-live="polite">
+              <div class="preview-empty" id="preview-empty">
+                <span class="preview-icon" aria-hidden="true">▦</span>
+                <p class="pixel-font">OUTPUT MONITOR</p>
+                <span
+                  >프롬프트를 입력하고 GENERATE를 누르면<br />이곳에 결과물이
+                  렌더링됩니다.</span
+                >
+              </div>
+              <div class="preview-loading" id="preview-loading" hidden="">
+                <p class="pixel-font loading-title" id="stage-text">
+                  프롬프트 분석 중…
+                </p>
+                <div class="progress">
+                  <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <p class="loading-sub" id="loading-sub">
+                  잠재 공간(latent space)을 탐색하고 있어요
+                </p>
+              </div>
+              <div class="preview-result" id="preview-result" hidden="">
+                <div class="result-frame">
+                  <img id="result-img" alt="AI 생성 시뮬레이션 결과물" />
+                  <span class="pixel-font result-badge" id="result-style-badge"
+                    >PIXEL</span
+                  >
+                </div>
+                <dl class="result-meta">
+                  <div>
+                    <dt>SEED</dt>
+                    <dd class="mono" id="result-seed">—</dd>
+                  </div>
+                  <div>
+                    <dt>STYLE</dt>
+                    <dd id="result-style">—</dd>
+                  </div>
+                  <div>
+                    <dt>PROMPT</dt>
+                    <dd id="result-prompt">—</dd>
+                  </div>
+                </dl>
+                <div class="result-actions">
+                  <button
+                    class="btn btn-primary btn-small pixel-font"
+                    id="save-btn"
+                    type="button"
+                  >
+                    SAVE TO CATALOG
+                  </button>
+                  <button
+                    class="btn btn-ghost btn-small pixel-font"
+                    id="regen-btn"
+                    type="button"
+                  >
+                    ↻ RE-ROLL
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ 07. ABOUT ══════════════════════ -->
+      <section class="section about" id="about" aria-label="크리에이터 소개">
+        <div class="container">
+          <div class="section-head reveal in">
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>CREATOR
+              PROFILE
+            </p>
+            <h2 class="section-title">
+              이 자판기를 <em class="marker">만든 사람</em>
+            </h2>
+          </div>
+
+          <div class="about-grid">
+            <article class="profile-card reveal in">
+              <div class="profile-photo">
+                <img
+                  src="./img/profile.png"
+                  alt="크리에이터 이지원의 픽셀아트 아바타"
+                  loading="lazy"
+                />
+                <span class="pixel-font profile-tag">PLAYER 1</span>
+              </div>
+              <div class="profile-body">
+                <h3>이지원 <span class="mono">LEE JIWON</span></h3>
+                <p class="profile-role">AI 콘텐츠 크리에이터 · 웹 퍼블리셔</p>
+                <p class="profile-bio">
+                  생성형 AI로 이미지와 영상을 만들고, 그것을 담는 그릇까지 직접
+                  코딩합니다.<br />이 웹사이트는 기획·세계관·애셋 생성·퍼블리싱
+                  전 과정을 1인 워크플로우로 완성한 포트폴리오입니다.<br />픽셀
+                  한 칸, 코인 한 닢까지 손으로 쌓았습니다.
+                </p>
+                <ul class="profile-contacts">
+                  <li>
+                    <a
+                      class="btn btn-small btn-dark"
+                      href="https://github.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5A3.9 3.9 0 0 1 6.7 8.8a3.6 3.6 0 0 1 .1-2.7s.9-.3 2.8 1a9.5 9.5 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                      GITHUB</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="btn btn-small btn-dark"
+                      href="mailto:hello@pixeldrop.kr"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                      >
+                        <rect
+                          x="3"
+                          y="5"
+                          width="18"
+                          height="14"
+                          rx="1"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        ></rect>
+                        <path
+                          d="M3 7l9 6 9-6"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        ></path>
+                      </svg>
+                      EMAIL</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="skill-panel reveal in" style="--d: 0.1s">
+              <h3 class="panel-title pixel-font">SKILL MATRIX</h3>
+              <ul class="skill-list">
+                <li>
+                  <div class="skill-head">
+                    <span>AI 프롬프트 엔지니어링</span><b>95</b>
+                  </div>
+                  <div class="skill-bar">
+                    <span
+                      class="fill"
+                      data-pct="95"
+                      style="--sc: var(--magenta); width: 95%"
+                    ></span>
+                  </div>
+                </li>
+                <li>
+                  <div class="skill-head">
+                    <span
+                      >이미지 생성 · 인페인팅
+                      <em class="mono">Imagen 3 / Nano Banana</em></span
+                    ><b>92</b>
+                  </div>
+                  <div class="skill-bar">
+                    <span
+                      class="fill"
+                      data-pct="92"
+                      style="--sc: var(--cyan); width: 92%"
+                    ></span>
+                  </div>
+                </li>
+                <li>
+                  <div class="skill-head">
+                    <span
+                      >웹 퍼블리싱 <em class="mono">HTML / CSS / JS</em></span
+                    ><b>90</b>
+                  </div>
+                  <div class="skill-bar">
+                    <span
+                      class="fill"
+                      data-pct="90"
+                      style="--sc: var(--purple); width: 90%"
+                    ></span>
+                  </div>
+                </li>
+                <li>
+                  <div class="skill-head">
+                    <span>영상 생성 <em class="mono">Veo / Omni</em></span
+                    ><b>85</b>
+                  </div>
+                  <div class="skill-bar">
+                    <span
+                      class="fill"
+                      data-pct="85"
+                      style="--sc: var(--gold); width: 85%"
+                    ></span>
+                  </div>
+                </li>
+                <li>
+                  <div class="skill-head">
+                    <span>그래픽 편집 · 모션</span><b>78</b>
+                  </div>
+                  <div class="skill-bar">
+                    <span
+                      class="fill"
+                      data-pct="78"
+                      style="--sc: var(--lime); width: 78%"
+                    ></span>
+                  </div>
+                </li>
+              </ul>
+              <h3 class="panel-title pixel-font">TOOLBOX</h3>
+              <ul class="toolbox">
+                <li>Prompt Engineering</li>
+                <li>Imagen 3</li>
+                <li>Nano Banana</li>
+                <li>Veo 3</li>
+                <li>Omni</li>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript ES6+</li>
+                <li>Web Audio API</li>
+                <li>Canvas 2D</li>
+                <li>Vite</li>
+                <li>Git / GitHub</li>
+                <li>Figma</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ══════════════════════ FOOTER ══════════════════════ -->
+    <footer class="site-footer">
+      <div class="footer-big pixel-font" aria-hidden="true">
+        PIXEL&nbsp;DROP&nbsp;★&nbsp;PIXEL&nbsp;DROP&nbsp;★&nbsp;PIXEL&nbsp;DROP&nbsp;★&nbsp;PIXEL&nbsp;DROP
+      </div>
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <span class="brand-name pixel-font">PIXEL▮DROP</span>
+          <p>
+            코인을 넣으면 상상이 떨어진다.<br />AI 아트워크 × 바닐라 웹 기술의
+            만남.
+          </p>
+          <ul class="tech-badges" aria-label="사용 기술">
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JS ES6+</li>
+            <li>0 FRAMEWORK</li>
+          </ul>
+        </div>
+        <nav class="footer-links" aria-label="푸터 메뉴">
+          <p class="pixel-font footer-label">MAP</p>
+          <a href="#vending">Vending Machine</a>
+          <a href="#catdrop">Cat Drop</a>
+          <a href="#catalog">Catalog</a>
+          <a href="#gacha">Gacha</a>
+        </nav>
+        <nav class="footer-links" aria-label="푸터 메뉴2">
+          <p class="pixel-font footer-label">MORE</p>
+          <a href="#motion">Motion</a>
+          <a href="#studio">Studio</a>
+          <a href="#about">About</a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+            >GitHub ↗</a
+          >
+        </nav>
+        <div class="footer-contact">
+          <p class="pixel-font footer-label">CONTACT</p>
+          <a href="mailto:hello@pixeldrop.kr">hello@pixeldrop.kr</a>
+          <p class="footer-docs">부속 문서: ai_prompts.md · image_assets.md</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span
+          >© <b id="footer-year">2026</b> PIXEL DROP. All pixels reserved.</span
+        >
+        <span class="mono"
+          >Designed &amp; Published with Vanilla JS — no template was
+          harmed.</span
+        >
+      </div>
+    </footer>
+
+    <!-- ══════════════════════ MODALS ══════════════════════ -->
+    <!-- 캡슐 언박싱 모달 -->
+    <div class="modal" id="capsule-modal" hidden="">
+      <div class="modal-backdrop" data-close=""></div>
+      <div
+        class="modal-box capsule-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cap-title"
+      >
+        <button
+          class="modal-close"
+          data-close=""
+          type="button"
+          aria-label="닫기"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16">
+            <path
+              d="M5 5l14 14M19 5L5 19"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="square"
+            ></path>
+          </svg>
+        </button>
+        <p class="pixel-font modal-eyebrow">CAPSULE UNBOXING</p>
+        <div class="capsule-stage" id="cap-stage">
+          <div
+            class="capsule-big rarity-Rare state-open"
+            id="cap-capsule"
+            role="button"
+            tabindex="0"
+            aria-label="캡슐 열기"
+            style="--rc: #00c2d1; display: none"
+          >
+            <span class="burst" aria-hidden="true"></span>
+            <span class="half cap-top" aria-hidden="true"></span>
+            <span class="half cap-bottom" aria-hidden="true"></span>
+            <span class="cap-shine" aria-hidden="true"></span>
+          </div>
+          <p class="cap-hint" id="cap-hint" hidden=""></p>
+          <div class="cap-reveal" id="cap-reveal">
+            <figure class="cap-card rarity-Rare" style="--rc: #00c2d1">
+              <div class="cap-img-wrap">
+                <img
+                  src="https://image.qwenlm.ai/generated-images/e025ccb7-c550-4f9f-9251-080dcc3c1423/_result.png"
+                  alt="우주 고양이 아스트로"
+                />
+              </div>
+              <figcaption>
+                <span class="rarity-tag" style="--rc: #00c2d1">RARE</span>
+                <h3>우주 고양이 아스트로</h3>
+                <p class="cap-id">PD-002 · SLOT A2 · CHARACTER</p>
+                <div class="cap-actions">
+                  <button
+                    class="btn btn-small btn-dark"
+                    data-action="copy"
+                    type="button"
+                  >
+                    ⧉ 프롬프트 복사
+                  </button>
+                  <button
+                    class="btn btn-small btn-ghost"
+                    data-action="download"
+                    type="button"
+                  >
+                    ↓ 다운로드
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+          <h3 class="sr-only" id="cap-title">캡슐 언박싱</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- 상품 상세 모달 -->
+    <div class="modal" id="detail-modal" hidden="">
+      <div class="modal-backdrop" data-close=""></div>
+      <div
+        class="modal-box detail-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="detail-title"
+      >
+        <button
+          class="modal-close"
+          data-close=""
+          type="button"
+          aria-label="닫기"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16">
+            <path
+              d="M5 5l14 14M19 5L5 19"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="square"
+            ></path>
+          </svg>
+        </button>
+        <div class="detail-grid" id="detail-grid"><!-- JS 렌더링 --></div>
+      </div>
+    </div>
+
+    <!-- 비디오 씨어터 모달 -->
+    <div class="modal" id="video-modal" hidden="">
+      <div class="modal-backdrop" data-close=""></div>
+      <div
+        class="modal-box video-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="video-title"
+      >
+        <button
+          class="modal-close"
+          data-close=""
+          type="button"
+          aria-label="닫기"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16">
+            <path
+              d="M5 5l14 14M19 5L5 19"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="square"
+            ></path>
+          </svg>
+        </button>
+        <div class="video-frame" id="video-frame"></div>
+        <div class="video-meta">
+          <h3 id="video-title" class="pixel-font">THEATER MODE</h3>
+          <a
+            class="video-link mono"
+            id="video-link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com 에서 열기 ↗</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- 토스트 -->
+    <div class="toast-root" id="toast-root" aria-live="polite"></div>
+
+    <!-- 모바일 하단 퀵바 -->
+    <div class="quickbar" id="quickbar">
+      <span class="pixel-font quick-coin">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            fill="var(--gold)"
+            stroke="var(--ink)"
+            stroke-width="2.2"
+          ></circle>
+        </svg>
+        <b id="quick-coin-count">4</b>
+      </span>
+      <a class="pixel-font" href="#vending">자판기</a>
+      <a class="pixel-font quick-gacha" href="#gacha">GACHA!</a>
+    </div>
+
+    <noscript
+      ><div class="noscript-note">
+        이 아케이드를 즐기려면 JavaScript를 켜 주세요. 🕹️
+      </div></noscript
+    >
+
+    <script src="./js/data.js"></script>
+    <script src="./js/vendingMachine.js"></script>
+    <script src="./js/app.js"></script>
+
+    <a
+      id="bottomBar"
+      style="
+        position: fixed;
+        bottom: -40px;
+        left: 0px;
+        z-index: 9999;
+        transform: translateX(-50%);
+        background-color: transparent;
+        border-radius: 5px 5px 0px 0px;
+        opacity: 0.3;
+        padding: 5px;
+        transition: 0.3s;
+        cursor: pointer;
+        max-height: 100px;
+        max-width: 45px;
+      "
+      ><img
+        src="chrome-extension://kobncfkmjelbefaoohoblamnbackjggk/icon/icon_32.png"
+        style="width: 32px; height: 32px"
+    /></a>
+  </body>
+</html>
