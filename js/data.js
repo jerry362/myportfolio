@@ -86,7 +86,7 @@ const products = [
     imageSrc: "img/a5.png",
     videoUrl: null,
     prompt:
-      "Retro pop-art screenprint poster of a cat face made of halftone dots, neon pink cyan and yellow ink layers, bold geometric shapes, slight misregistration effect, grainy risograph texture",
+      "Retro pop-art screenprint of a British Shorthair cat face, composed of layered halftone dots, vibrant neon pink, cyan blue, yellow, and deep purple-indigo ink layers, distinct geometric shapes and outlines, prominent misregistration effect with offset ink fringing, central close-up portrait.",
     tags: ["포스터", "팝아트", "실크스크린", "반상화"],
   },
   {
